@@ -11,14 +11,18 @@ Assumes this is running on an Ubuntu 24.04.4 LTS machine, all scripts in this se
 1. Update the pipeline file - this will dictate the performance period - takes slots. You can also modify step size - this dictates how much data goes into each file, i.e., a sync-committee period's worth, a day's worth, an hour, etc. Note that attestations use epochs instead. Note that there are 32 slots in an epoch and there are 8192 slots in a sync committee (or 256 epochs); a day contains 225 epochs. This file might be helpful: https://docs.google.com/spreadsheets/d/1FSNkBFta93j0e79G_PtCrv1LETWHhhtfvkD2B2AyeXA/edit?gid=835125837#gid=835125837
 
 2. Review the files:
+   
    master_script.sh
+   
    attestation_data.sh
+   
    proposal_data.sh
+   
    sync_data.sh
 
    Change directory names as necessary and update with your endpoint info (can use a node provider or your own node).
 
-3. Run the master_script.sh file from the terminal; i.e., bash master_script.sh
+4. Run the master_script.sh file from the terminal; i.e., bash master_script.sh
 
 
 This process will run the three scripts attestation_data.sh, proposal_data.sh and sync_data.sh in parallel.
@@ -32,10 +36,15 @@ This part of the process calculates performance across all validators during the
 1. Run in virtual environment (VENV). At a terminal type the following (in the same directory that you intend to run the analysis scripts):
 
 sudo apt update
+
 sudo apt install python3-venv python3-pip -y
+
 python3 -m venv venv
+
 source venv/bin/activate
+
 pip install --upgrade pip
+
 pip install pandas tqdm numpy requests
 
 (when you're done type deactivate to return)
@@ -43,8 +52,11 @@ pip install pandas tqdm numpy requests
 2. Run the following scripts in this order:
 
 analyze-attestations.py
+
 analyze-sync.py
+
 aggregateProposalFiles.py
+
 missingSlotsProps2.py
 
 3. Once completed, review the output of missingSlotsProps2.py, i.e., 'final_resolved_slots-missed_slots.csv'. Filter by column 'Originally_Missing', i.e., = 1. These entries need to be manually updated. Use a public explorer like beaconcha.in.
